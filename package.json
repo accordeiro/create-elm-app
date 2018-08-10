@@ -25,33 +25,39 @@
     "autoprefixer": "^8.0.0",
     "babel-loader": "8.0.0-beta.4",
     "babel-runtime": "^6.26.0",
+    "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "chalk": "^2.3.1",
     "clean-webpack-plugin": "^0.1.18",
     "cli-table": "0.3.1",
     "connect-history-api-fallback": "^1.5.0",
-    "cross-spawn": "^6.0.4",
+    "cross-spawn": "^6.0.5",
     "css-loader": "^0.28.9",
-    "dotenv": "^5.0.0",
-    "elm": "^0.18.0",
+    "dotenv": "^6.0.0",
+    "elm": "~0.18.0",
     "elm-hot-loader": "0.5.4",
     "elm-test": "^0.18.12",
-    "elm-webpack-loader": "^4.4.0",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "file-loader": "^1.1.6",
-    "fs-extra": "^5.0.0",
-    "html-webpack-plugin": "^2.30.1",
+    "elm-webpack-loader": "^4.5.0",
+    "file-loader": "^1.1.11",
+    "fs-extra": "^6.0.1",
+    "html-webpack-plugin": "^3.0.7",
     "http-proxy-middleware": "^0.17.4",
+    "mini-css-extract-plugin": "^0.4.0",
     "minimist": "1.2.0",
-    "postcss-loader": "2.1.0",
+    "postcss-flexbugs-fixes": "^3.3.0",
+    "postcss-loader": "2.1.5",
+    "promise": "8.0.1",
     "prompt": "1.0.0",
-    "react-dev-utils": "^5.0.0",
+    "react-dev-utils": "6.0.0-next.3e165448",
     "react-error-overlay": "^4.0.0",
-    "string-replace-loader": "^1.3.0",
-    "style-loader": "^0.20.2",
-    "sw-precache-webpack-plugin": "^0.11.4",
-    "url-loader": "^0.6.2",
-    "webpack": "^3.11.0",
-    "webpack-dev-server": "^2.11.1"
+    "string-replace-loader": "^2.1.1",
+    "style-loader": "^0.21.0",
+    "sw-precache-webpack-plugin": "^0.11.5",
+    "uglifyjs-webpack-plugin": "^1.2.4",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.2.0",
+    "webpack-dev-server": "^3.1.1",
+    "webpack-manifest-plugin": "^2.0.3",
+    "whatwg-fetch": "2.0.4"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
@@ -61,15 +67,16 @@
     "eslint": "^4.18.0",
     "eslint-plugin-prettier": "^2.6.0",
     "husky": "^0.14.3",
+    "lint-staged": "^7.0.0",
     "mocha": "^5.0.1",
-    "nightmare": "^2.10.0",
+    "nightmare": "^3.0.1",
     "prettier": "^1.10.2",
     "rimraf": "^2.6.2",
     "semantic-release": "12.1.1",
     "unexpected": "^10.37.2"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "files": [
     "bin",
@@ -91,12 +98,22 @@
   "scripts": {
     "cz": "git-cz",
     "eslint": "eslint .",
-    "prettier": "prettier --write --single-quote '{bin,config,scripts,template/src,tests}/**/*.js'",
+    "format": "prettier --write '{bin,config,scripts,template/src,tests}/**/*.js'",
     "semantic-release": "semantic-release",
     "test": "npm run test:cli && npm run test:functional",
     "test:cli": "mocha tests/cliAccessibility.js --reporter spec --timeout 15000",
     "test:functional": "mocha tests/*.spec.js --reporter spec --timeout 15000",
     "build": "cd template && node ../bin/elm-app-cli.js build",
-    "start": "cd template && node ../bin/elm-app-cli.js start"
+    "start": "cd template && node ../bin/elm-app-cli.js start",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ],
+    "yarn.lock": [
+      "git rm --cached"
+    ]
   }
 }
